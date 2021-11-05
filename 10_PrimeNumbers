@@ -1,0 +1,84 @@
+using System;
+
+namespace PrimeNumbers {
+    class Program {
+        static void Main(string[] args) {
+
+            //  Input & Processing
+                //  Output of the instruction for entering an integer 
+                Console.Write("Please enter the upper limit up to which all numbers should be checked for prime numbers: ");
+                int number = Setup.IntSetup();
+
+            //  Processing & Output
+                //  Loop through all numbers between 2 and the entered upper limit
+                for(int i = 2; i <= number; i++) {
+                    //  Check whether the current check number is a prime number
+                    if(IsPrime(i))
+                        //  Print it out if necessary
+                        Console.Write(i + " ");
+                }
+
+            //  Resetting the console color
+            Console.ForegroundColor = ConsoleColor.White;
+            
+            //  Redundant loop to be able to start the program again
+            Console.WriteLine("\nPress any key to check a new number...");
+            Console.ReadKey();
+            Console.Clear();
+            Main(args);
+        }
+
+        //  Method to check an integer for a prime number
+        static bool IsPrime(int number) {
+
+            //  Check whether the number is less than 2
+            if(number <= 1)
+
+                //  Return false if necessary
+                return false;
+
+
+            //  Obtaining the highest possible value, which has to be checked 
+            int bound = (int) Math.Floor(Math.Sqrt(number));
+
+            //  Loop through all values from 2 to the upper limit in steps of 1
+            for(int i = 2; i <= bound; i++)
+
+                //  Check whether the number to be checked can be divided evenly by the current check number
+                if(number % i == 0)
+
+                    //  Return false if necessary
+                    return false;
+
+            //  Return true, if all other cases were not false
+            return true;
+        }
+    }
+
+    class Setup {
+
+        //  Method for prompting the user to enter an integer
+        public static int IntSetup() {
+
+            //  Receive the user input as a string.
+            String line = Console.ReadLine();
+
+            //  Check that the user's input is actually an integer
+            try {
+
+                // Definition of the integer variable in which the parsed string is saved 
+                int i = int.Parse(line);
+
+                // Return of the integer value 
+                return i;
+            } catch(FormatException) {
+
+                //  Output of the error message 
+                Console.WriteLine("Der eingegebene Wert muss eine ganzzahl sein!");
+
+                //  Redundant call of the method to enable further input
+                return IntSetup();
+            }
+        }
+    }
+}
